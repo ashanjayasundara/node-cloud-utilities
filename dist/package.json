@@ -1,0 +1,42 @@
+{
+    "name": "@ashanj/node-cloud-utilities",
+    "version": "0.0.1",
+    "description": "Node JS cloud utilities",
+    "main": "lib/es5/index.js",
+    "module": "lib/es6/index.js",
+    "sideEffects": false,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ashanjayasundara/node-cloud-utilities.git"
+    },
+    "files": [
+        "lib",
+        "CHANGELOG.md",
+        "LICENSE",
+        "package.json",
+        "README.md"
+    ],
+    "keywords": [
+        "Node JS",
+        "AWS",
+        "S3",
+        "Zip Download"
+    ],
+    "author": {
+        "name": "Ashan Jayasundara",
+        "email": "email2ashan@gmail.com"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ashanjayasundara/node-cloud-utilities/issues"
+    },
+    "homepage": "https://github.com/ashanjayasundara/node-cloud-utilities#readme",
+    "scripts": {
+        "publish": "npm publish --access public"
+    },
+    "dependencies": {
+        "adm-zip": "^0.5.10",
+        "aws-sdk": "^2.1472.0",
+        "nanoid": "3.3.4"
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "name": "node-cloud-utils",
+    "version": "1.0.0",
+    "repository": {
+        "url": "git@github.com:ashanjayasundara/node-cloud-utilities.git"
+    },
+    "author": {
+        "name": "Ashan Jayasundara",
+        "email": "email2ashan@gmail.com"
+    },
+    "license": "MIT",
+    "scripts": {
+        "compile": "rm -rf dist/lib && tsc && tsc --build tsconfig.es5.json",
+        "format:check": "prettier --check .",
+        "format": "prettier --write .",
+        "lint:check": "eslint .",
+        "lint:fix": "eslint --fix .",
+        "dev": "ts-node-dev --respawn --pretty --transpile-only application.ts"
+    },
+    "devDependencies": {
+        "@types/adm-zip": "^0.5.2",
+        "@types/aws-sdk": "^2.7.0",
+        "@types/nanoid": "^3.0.0",
+        "@types/node": "^20.5.1",
+        "eslint": "^8.47.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-prettier": "^5.0.0",
+        "prettier": "^3.0.3",
+        "ts-node-dev": "^2.0.0",
+        "typescript": "^5.1.6"
+    },
+    "dependencies": {
+        "adm-zip": "^0.5.10",
+        "aws-sdk": "^2.1472.0",
+        "nanoid": "3.3.4"
+    }
+}
