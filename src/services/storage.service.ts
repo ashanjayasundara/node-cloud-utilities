@@ -26,7 +26,8 @@ export class AwsSimpleStorage extends CloudStorage {
 
     public constructor(configs: CloudConfigs) {
         super(configs)
-        const secondary_cloud_credentials = configs.secondary_account ?? configs.primary_account
+        const secondary_cloud_credentials =
+            configs.secondary_account ?? configs.primary_account
         this.primaryS3Client = new S3({
             accessKeyId: configs.primary_account.access_key,
             secretAccessKey: configs.primary_account.secret_access_key,
@@ -47,8 +48,9 @@ export class AwsSimpleStorage extends CloudStorage {
     ): Promise<FileDownloadResponse> {
         let settings = this.configs.primary_account
         let temp_zip_filename = `${ziped_filename}_${nanoid(8)}.zip`
-        let temp_zip_filepath = `${settings.local?.temp_folder ?? 'tmp/zip'
-            }/${temp_zip_filename}`
+        let temp_zip_filepath = `${
+            settings.local?.temp_folder ?? 'tmp/zip'
+        }/${temp_zip_filename}`
         try {
             const zip = new AdmZip()
             for (const file of file_list) {
@@ -56,7 +58,9 @@ export class AwsSimpleStorage extends CloudStorage {
                     Bucket: bucket_name,
                     Key: file,
                 }
-                const payload = await this.primaryS3Client.getObject(params).promise()
+                const payload = await this.primaryS3Client
+                    .getObject(params)
+                    .promise()
                 zip.addFile(file, Buffer.from(payload.Body as Buffer))
             }
             let file_written: boolean =
@@ -70,12 +74,17 @@ export class AwsSimpleStorage extends CloudStorage {
                     payload: null,
                 } as FileDownloadResponse
             }
-            let temp_settings = utilize_primary_account_only ? this.configs.primary_account : this.configs.secondary_account
-            let { success, error } = await this.uploadToS3({
-                Bucket: temp_settings.storage?.tempory_bucket,
-                Key: temp_zip_filename,
-                Body: fs.createReadStream(temp_zip_filepath),
-            }, utilize_primary_account_only)
+            let temp_settings = utilize_primary_account_only
+                ? this.configs.primary_account
+                : this.configs.secondary_account
+            let { success, error } = await this.uploadToS3(
+                {
+                    Bucket: temp_settings.storage?.tempory_bucket,
+                    Key: temp_zip_filename,
+                    Body: fs.createReadStream(temp_zip_filepath),
+                },
+                utilize_primary_account_only
+            )
 
             if (!success) {
                 return {
@@ -85,11 +94,14 @@ export class AwsSimpleStorage extends CloudStorage {
                 } as FileDownloadResponse
             }
 
-            let download_link = this.getSignedUrl({
-                Bucket: temp_settings.storage?.tempory_bucket,
-                Key: temp_zip_filename,
-                Expires: temp_settings.storage?.signed_expires ?? 900,
-            }, utilize_primary_account_only)
+            let download_link = this.getSignedUrl(
+                {
+                    Bucket: temp_settings.storage?.tempory_bucket,
+                    Key: temp_zip_filename,
+                    Expires: temp_settings.storage?.signed_expires ?? 900,
+                },
+                utilize_primary_account_only
+            )
 
             deleteTemporaryFile(temp_zip_filepath)
 
@@ -118,7 +130,9 @@ export class AwsSimpleStorage extends CloudStorage {
         utilize_primary_account: boolean = false
     ): Promise<{ success: boolean; error: any }> {
         return new Promise((resolve) => {
-            let s3Client = utilize_primary_account ? this.primaryS3Client : this.secondaryS3Client
+            let s3Client = utilize_primary_account
+                ? this.primaryS3Client
+                : this.secondaryS3Client
             s3Client.upload(
                 params,
                 (err: Error, data: ManagedUpload.SendData) => {
@@ -129,8 +143,14 @@ export class AwsSimpleStorage extends CloudStorage {
         })
     }
 
-    public getSignedUrl(params: any, utilize_primary_account: boolean = false, operation: string = 'getObject'): string {
-        let s3Client = utilize_primary_account ? this.primaryS3Client : this.secondaryS3Client
+    public getSignedUrl(
+        params: any,
+        utilize_primary_account: boolean = false,
+        operation: string = 'getObject'
+    ): string {
+        let s3Client = utilize_primary_account
+            ? this.primaryS3Client
+            : this.secondaryS3Client
         return s3Client.getSignedUrl(operation, params)
     }
 }

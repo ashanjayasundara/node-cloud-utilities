@@ -18,19 +18,23 @@ export default class CloudService {
                 region: 'us-east-1',
                 access_key: '',
                 secret_access_key: '',
-            }
+            },
         }
     ): CloudService {
         if (!CloudService.instance) {
-            makeDirectory(configs.primary_account?.local?.temp_folder ?? 'tmp/zip')
+            makeDirectory(
+                configs.primary_account?.local?.temp_folder ?? 'tmp/zip'
+            )
             CloudService.instance = new CloudService(configs)
         }
 
         return CloudService.instance
     }
 
-    public getStorageServie(configs: CloudConfigs = {} as CloudConfigs): CloudStorage {
-        let _configs: CloudConfigs = { ...this.cloudConfigs, ...configs };
+    public getStorageServie(
+        configs: CloudConfigs = {} as CloudConfigs
+    ): CloudStorage {
+        let _configs: CloudConfigs = { ...this.cloudConfigs, ...configs }
         switch (this.cloudConfigs.cloud_provider) {
             case CloudProviderType.AWS:
                 return new AwsSimpleStorage(_configs)
