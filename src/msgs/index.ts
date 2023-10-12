@@ -1,3 +1,3 @@
-import { CloudConfigMsg, FileDownloadResponse } from './system-configs.msg'
+import { CloudConfigMsg, FileDownloadResponse, CloudConfigs } from './system-configs.msg'
 
-export { CloudConfigMsg, FileDownloadResponse }
+export { CloudConfigMsg, FileDownloadResponse, CloudConfigs }
