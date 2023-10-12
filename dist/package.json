@@ -1,6 +1,6 @@
 {
     "name": "@ashanj/node-cloud-utilities",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "description": "Node JS cloud utilities",
     "main": "lib/es5/index.js",
     "module": "lib/es6/index.js",

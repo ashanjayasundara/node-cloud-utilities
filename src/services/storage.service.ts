@@ -16,8 +16,20 @@ export abstract class CloudStorage {
     abstract downloadZipedFiles(
         bucket_name: string,
         file_list: string[],
-        ziped_filename?: string
+        ziped_filename?: string,
+        utilize_primary_account_only?: boolean
     ): Promise<FileDownloadResponse>
+
+    abstract getSignedUrl(
+        params: any,
+        utilize_primary_account: boolean,
+        operation: string
+    ): string
+
+    abstract uploadToS3(
+        params: PutObjectRequest,
+        utilize_primary_account: boolean
+    ): Promise<{ success: boolean; error: any }>
 }
 
 export class AwsSimpleStorage extends CloudStorage {
